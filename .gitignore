@@ -1,0 +1,8 @@
+*.whl
+*.gz
+*.zip
+.env
+.zip
+*.session
+*.xlsx
+*.pyc

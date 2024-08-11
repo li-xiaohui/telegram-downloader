@@ -1,0 +1,7 @@
+gmail_username=''
+gmail_pwd=""
+recipient_email=''
+api_id = ""
+api_hash = ''
+phone_number = ''
+username=''

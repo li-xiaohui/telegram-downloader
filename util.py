@@ -1,4 +1,10 @@
-def send_mail_with_gmail(recipient_email, subject, body_text, attachment_name=None):
+def send_mail_with_gmail(
+        sender_email,
+        sender_password,
+        recipient_email, 
+        subject, 
+        body_text, 
+        attachment_name=None):
     """
     Sends an email using Gmail with optional attachment.
 
@@ -16,10 +22,6 @@ def send_mail_with_gmail(recipient_email, subject, body_text, attachment_name=No
     from email.mime.base import MIMEBase
     from email.mime.multipart import MIMEMultipart
     from email.mime.text import MIMEText
-
-    ## fill up with your Gmail 
-    sender_email = ""
-    sender_password = ""
 
     with open(attachment_name, "rb") as attachment_file:
         attachment = MIMEBase("application", "octet-stream")
