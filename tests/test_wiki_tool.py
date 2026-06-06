@@ -77,3 +77,34 @@ def test_dump_batch_jsonl_is_valid_json_per_line(tmp_path):
         parsed = json.loads(line)
         assert "message_id" in parsed
         assert "source_slug" in parsed
+
+
+import subprocess
+import sys
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+
+
+def test_cli_slug():
+    result = subprocess.run(
+        [sys.executable, "wiki_tool.py", "slug", "Core Value"],
+        cwd=REPO_ROOT,
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 0, result.stderr
+    assert result.stdout.strip() == "core-value"
+
+
+def test_cli_dump_batch_outputs_jsonl():
+    result = subprocess.run(
+        [sys.executable, "wiki_tool.py", "dump-batch", "tests/fixtures/mini-batch"],
+        cwd=REPO_ROOT,
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 0, result.stderr
+    lines = [l for l in result.stdout.splitlines() if l.strip()]
+    assert len(lines) == 2
+    first = json.loads(lines[0])
+    assert first["source_slug"] == "sample-channel-1001"

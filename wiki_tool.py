@@ -95,3 +95,38 @@ def dump_batch(folder: Path) -> Iterator[dict]:
                 "text": text,
                 "source_slug": f"{slug}-{message_id}",
             }
+
+
+import json as _json
+import sys as _sys
+
+
+_USAGE = """usage:
+  wiki_tool.py slug <channel-name>
+  wiki_tool.py list-batches
+  wiki_tool.py dump-batch <folder>
+"""
+
+
+def _main(argv: list[str]) -> int:
+    if len(argv) < 2:
+        _sys.stderr.write(_USAGE)
+        return 2
+    cmd = argv[1]
+    if cmd == "slug" and len(argv) == 3:
+        print(channel_slug(argv[2]))
+        return 0
+    if cmd == "list-batches" and len(argv) == 2:
+        for b in list_batches(Path(".")):
+            print(_json.dumps(b, ensure_ascii=False))
+        return 0
+    if cmd == "dump-batch" and len(argv) == 3:
+        for rec in dump_batch(Path(argv[2])):
+            print(_json.dumps(rec, ensure_ascii=False))
+        return 0
+    _sys.stderr.write(_USAGE)
+    return 2
+
+
+if __name__ == "__main__":
+    raise SystemExit(_main(_sys.argv))
