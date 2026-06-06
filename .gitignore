@@ -6,3 +6,4 @@
 *.session
 *.xlsx
 *.pyc
+.DS_Store

@@ -1,4 +1,4 @@
 Telegram Downloader
 --------------------
-tel.py - downloader
+tel.py - telegram message downloader
 util.py - contains util to send email via email
