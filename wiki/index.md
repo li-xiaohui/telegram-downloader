@@ -4,7 +4,9 @@ Durable pages only. Source pages (one per Telegram message) are listed in [sourc
 
 ## Tickers
 
-_(none yet)_
+- [[krx-009150-samsung-electro-mechanics]] — Korean component maker; CLSA AI-infrastructure re-rating, TP ₩3.2M
+- [[krx-000660-sk-hynix]] — Korean memory maker; cited as the HBM re-rating precedent
+- [[nasdaq-intc]] — US chipmaker; EMIB-T packaging and Computex appearances
 
 ## Assets
 
@@ -16,11 +18,13 @@ _(none yet)_
 
 ## Themes
 
-_(none yet)_
+- [[ai-infrastructure]] — AI buildout re-rating Korean component/memory suppliers
+- [[us-korea-tariffs]] — US trade actions on Korea and their real net impact
+- [[korea-market-volatility]] — sidecars, circuit breakers, sharp futures moves on Korean exchanges
 
 ## Channels
 
-_(none yet)_
+- [[brain-and-body-research]] — research summaries, macro/trade commentary, market-structure alerts
 
 ## Synthesis
 
