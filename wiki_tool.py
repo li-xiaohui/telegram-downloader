@@ -26,11 +26,10 @@ def channel_slug(name: str) -> str:
     return s.lower()
 
 
-import re as _re
 from pathlib import Path
 
 
-_BATCH_RE = _re.compile(r"^output (\d{4}-\d{2}-\d{2})$")
+_BATCH_RE = re.compile(r"^output (\d{4}-\d{2}-\d{2})$")
 
 
 def list_batches(root: Path) -> list[dict]:
@@ -58,7 +57,7 @@ import pandas as pd
 def _channel_name_from_filename(filename: str) -> str:
     """`'Sample Channel 2026-06-06.xlsx'` → `'Sample Channel'`."""
     stem = Path(filename).stem
-    return _re.sub(r"\s+\d{4}-\d{2}-\d{2}$", "", stem)
+    return re.sub(r"\s+\d{4}-\d{2}-\d{2}$", "", stem)
 
 
 def dump_batch(folder: Path) -> Iterator[dict]:
@@ -76,6 +75,8 @@ def dump_batch(folder: Path) -> Iterator[dict]:
         for _, row in df.iterrows():
             text = row.get("text")
             if not isinstance(text, str) or not text.strip():
+                continue
+            if pd.isna(row.get("id")) or pd.isna(row.get("channel_id")):
                 continue
             message_id = int(row["id"])
             date_val = row["date"]

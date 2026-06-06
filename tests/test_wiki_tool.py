@@ -108,3 +108,45 @@ def test_cli_dump_batch_outputs_jsonl():
     assert len(lines) == 2
     first = json.loads(lines[0])
     assert first["source_slug"] == "sample-channel-1001"
+
+
+import pandas as pd
+
+
+def test_dump_batch_skips_row_with_nan_id(tmp_path):
+    """A row whose id is NaN must be skipped; only the good row is yielded."""
+    batch_dir = tmp_path / "output 2026-06-07"
+    batch_dir.mkdir()
+    xlsx_path = batch_dir / "Sample Channel 2026-06-07.xlsx"
+
+    df = pd.DataFrame(
+        [
+            {
+                "channel": "Sample Channel",
+                "sender_id": 111,
+                "text": "Good message.",
+                "date": "2026-06-07T10:00:00",
+                "id": 2001,
+                "post_author": None,
+                "views": 50,
+                "channel_id": 999_888_777,
+            },
+            {
+                "channel": "Sample Channel",
+                "sender_id": 222,
+                "text": "Message with missing id.",
+                "date": "2026-06-07T11:00:00",
+                "id": float("nan"),
+                "post_author": None,
+                "views": 10,
+                "channel_id": 999_888_777,
+            },
+        ]
+    )
+    df.to_excel(xlsx_path, index=False)
+
+    records = list(dump_batch(batch_dir))
+
+    assert len(records) == 1
+    assert records[0]["message_id"] == 2001
+    assert records[0]["source_slug"] == "sample-channel-2001"
